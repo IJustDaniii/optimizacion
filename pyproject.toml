@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "optiwin"
+dynamic = ["version"]
+description = "Optimizador reversible de energía y rendimiento para Windows 10/11"
+requires-python = ">=3.12"
+dependencies = ["psutil>=5.9"]
+
+[project.optional-dependencies]
+gui = ["PySide6>=6.7"]
+dev = ["pytest>=8"]
+build = ["PySide6>=6.7", "pyinstaller>=6.6"]
+
+[project.scripts]
+optiwin = "optiwin.cli:main"
+
+[project.gui-scripts]
+optiwin-gui = "optiwin.gui.app:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "optiwin.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

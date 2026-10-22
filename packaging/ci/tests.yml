@@ -1,0 +1,21 @@
+# Ejecuta los tests en cada push y pull request.
+# Para activarlo: copia este archivo a .github/workflows/tests.yml (hace falta un token con el permiso "workflow").
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[gui,dev]"
+      - run: python -m pytest -q
+        env:
+          QT_QPA_PLATFORM: offscreen
